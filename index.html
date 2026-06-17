@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高職英文互動評量 - L05~L06 複習</title>
+    <style>
+        :root {
+            --primary: #005B9F;
+            --primary-light: #E6F3FF;
+            --secondary: #3498DB;
+            --success: #2ECC71;
+            --danger: #E74C3C;
+            --dark: #2C3E50;
+            --gray: #7F8C8D;
+            --light-gray: #F8F9FA;
+            --border: #E0E0E0;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Microsoft JhengHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Sticky Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--gray);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            min-height: 60vh;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Context Block */
+        .context-block {
+            background: var(--card-bg);
+            border-left: 5px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .context-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-action {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-action:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .highlight-blank {
+            display: inline-block;
+            min-width: 30px;
+            text-align: center;
+            border-bottom: 2px solid var(--dark);
+            font-weight: bold;
+            color: var(--primary);
+            padding: 0 0.2rem;
+        }
+
+        .translation-block {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed var(--border);
+            color: var(--gray);
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .tts-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--secondary);
+            padding: 0.2rem;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .tts-btn:hover {
+            background: var(--primary-light);
+        }
+
+        /* Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .option-btn {
+            background: var(--light-gray);
+            border: 1px solid var(--border);
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            background: var(--primary-light);
+            border-color: var(--secondary);
+        }
+
+        .option-btn.correct {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .option-btn.wrong {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        /* Input / Writing type */
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .answer-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        /* Explanation */
+        .explanation {
+            display: none;
+            background: #FDFEFE;
+            border: 1px solid var(--secondary);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .exp-item {
+            margin-bottom: 0.8rem;
+        }
+        
+        .exp-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .exp-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Specific Table Styling for Context */
+        table.pattern-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        table.pattern-table th, table.pattern-table td {
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        table.pattern-table th {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>英文互動評量 L05~L06</h1>
+        <p>精編翰林版 Choice (二) 第5~6課複習</p>
+    </header>
+
+    <div class="tabs-container">
+        <div class="tabs" id="tabs">
+            <button class="tab-btn active" data-target="vocab">一、文意字彙</button>
+            <button class="tab-btn" data-target="grammar">二、語法測驗</button>
+            <button class="tab-btn" data-target="cloze">三、綜合測驗</button>
+            <button class="tab-btn" data-target="dialogue">四、對話</button>
+            <button class="tab-btn" data-target="reading">五、閱讀測驗</button>
+            <button class="tab-btn" data-target="writing">六~七、填充與句型</button>
+        </div>
+    </div>
+
+    <main id="app-content">
+        <!-- Sections will be rendered here by JS -->
+    </main>
+
+    <script>
+        const contexts = {
+            'cloze_1': { 
+                title: '綜合測驗 (The Tao People)', 
+                en: `The Tao people live on Orchid Island (蘭嶼). They are famous for their fishing culture. Their traditional fishing boats are painted white, red, and black, and <span class="highlight-blank" id="cloze-19">19</span> eye-like patterns on both sides. The eye pattern is one of the Tao's best-known <span class="highlight-blank" id="cloze-20">20</span>. They believe <span class="highlight-blank" id="cloze-21">21</span> these eyes can show the way, see danger in the sea and protect fishermen from evil spirits or storms. This special design has been <span class="highlight-blank" id="cloze-22">22</span> from one generation to another. Today, the boat-eye pattern is <span class="highlight-blank" id="cloze-23">23</span> an important cultural symbol that it is protected by law, and only the Tao people can use it. This reminds everyone to respect and value indigenous traditions.`, 
+                zh: `達悟族人居住在蘭嶼。他們以捕魚文化聞名。他們傳統的漁船被漆成白色、紅色和黑色，兩側都有像眼睛一樣的圖案。眼睛圖案是達悟族最著名的象徵之一。他們相信這些眼睛能指引方向、看見海中的危險，並保護漁民免受惡靈或風暴的傷害。這個特殊的設計已經代代相傳。今天，船眼圖案是如此重要的一個文化象徵，以至於受到法律保護，且只有達悟族人才能使用它。這提醒了每個人要尊重和重視原住民的傳統。` 
+            },
+            'reading_1': {
+                title: '閱讀測驗 A: Indigenous Patterns',
+                en: `
+                <table class="pattern-table">
+                    <tr><th>Tribe</th><th>Pattern</th><th>Meaning</th></tr>
+                    <tr><td>Paiwan (排灣族)</td><td>hundred pacer snake</td><td>People believe the snake can protect their tribe and bring good luck. Only chiefs (頭目) and nobles (貴族) can use the snake pattern.</td></tr>
+                    <tr><td>Rukai (魯凱族)</td><td>lily flower (百合花)</td><td>The lily flower means purity (純潔), honor (榮耀), and bravery (勇敢). Only men who show great courage and women with good character can wear it.</td></tr>
+                    <tr><td>Atayal (泰雅族)</td><td>diamond pattern</td><td>This pattern symbolizes the eyes of their ancestors. With this pattern, Atayal people can feel that their ancestors are watching and protecting them.</td></tr>
+                    <tr><td>Amis (阿美族)</td><td>eight-pointed star</td><td>This pattern stands for the power of the stars and the universe. It also shows a mother's love that protects and gives life.</td></tr>
+                </table>`,
+                zh: `
+                <table class="pattern-table">
+                    <tr><th>部落</th><th>圖案</th><th>意義</th></tr>
+                    <tr><td>排灣族</td><td>百步蛇</td><td>人們相信這種蛇能保護他們的部落並帶來好運。只有頭目和貴族可以使用蛇的圖案。</td></tr>
+                    <tr><td>魯凱族</td><td>百合花</td><td>百合花代表純潔、榮耀和勇敢。只有展現巨大勇氣的男性和品格良好的女性才能配戴。</td></tr>
+                    <tr><td>泰雅族</td><td>菱形紋</td><td>這個圖案象徵著祖靈的眼睛。有了這個圖案，泰雅族人能感覺到祖先在看顧並保護著他們。</td></tr>
+                    <tr><td>阿美族</td><td>八角星</td><td>這個圖案代表星星與宇宙的力量。它也展現了母親保護並賦予生命的愛。</td></tr>
+                </table>`
+            },
+            'reading_2': {
+                title: '閱讀測驗 B: A Terrible Experience',
+                en: `I'm Henry, a twenty-year-old college student. To help you avoid making the same mistake as me, I'd like to share a terrible experience I had. Last year, I read a post on social media about making money. All I had to do was rent out my online account to earn some easy cash. It sounded like a simple part-time job, so I agreed. Two months later, I learned that I was under police investigation because my bank account had been used as a dummy account by scammers. The police told me that the money in the account was connected to many fraud cases. In fact, I was a victim, too. I didn't know what was happening at the time. However, according to the law, I was still held responsible because I had given my account to the scammers. This experience taught me a painful lesson: always be careful about online offers and never trust strangers too easily.`,
+                zh: `我是亨利，一個二十歲的大學生。為了幫助你們避免犯下和我一樣的錯誤，我想分享一個我經歷過的可怕經驗。去年，我在社群媒體上看到一篇關於賺錢的貼文。我所要做的就是出租我的線上帳戶來賺取一些輕鬆的現金。這聽起來像是一份簡單的兼職工作，所以我同意了。兩個月後，我得知自己正在接受警方調查，因為我的銀行帳戶被詐騙集團當作人頭帳戶使用。警方告訴我，帳戶裡的錢與許多詐欺案件有關。事實上，我也是一名受害者。當時我並不知道發生了什麼事。然而，根據法律，我仍然要負起責任，因為我把我的帳戶交給了詐騙集團。這次經驗給了我一個慘痛的教訓：永遠要對網路上的提議保持小心，而且絕對不要太輕易相信陌生人。`
+            }
+        };
+
+        const quizData = [
+            // Vocabulary
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '1. Mary\'s private life has been under the _____ since she married a famous movie star.', 
+                options: ['(A) pattern', '(B) tribe', '(C) spotlight', '(D) detail'], ans: 2,
+                exp: { 
+                    clue: '句中提到與知名電影明星結婚（married a famous movie star），可推論其私生活成為大眾關注的焦點。', 
+                    words: 'spotlight (n. 聚光燈；大眾目光焦點) / private (adj. 私人的) / pattern (n. 圖案) / tribe (n. 部落)', 
+                    grammar: 'under the spotlight 是常見片語，意指「在鎂光燈下；成為眾人注目的焦點」。', 
+                    trans: '自從瑪莉和一位著名的電影明星結婚後，她的私生活就一直攤在鎂光燈下。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '2. Using AI tools has become a popular _____ among students.', 
+                options: ['(A) situation', '(B) ancestor', '(C) symbol', '(D) trend'], ans: 3,
+                exp: { 
+                    clue: '句中提到在學生之間變得很受歡迎（become a popular...），搭配使用 AI 工具，這是一種趨勢。', 
+                    words: 'trend (n. 趨勢；潮流) / situation (n. 情況) / ancestor (n. 祖先) / symbol (n. 象徵)', 
+                    grammar: 'become a popular trend 意為「成為一股受歡迎的風潮」。', 
+                    trans: '使用人工智慧工具已經成為學生之間的一股熱門趨勢。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '3. Jack will take a taxi to _____ that he won\'t be late for the job interview.', 
+                options: ['(A) ensure', '(B) continue', '(C) symbolize', '(D) interact'], ans: 0,
+                exp: { 
+                    clue: '搭計程車的目的，是為了「確保」面試不會遲到。', 
+                    words: 'ensure (v. 確保；保證) / continue (v. 繼續) / symbolize (v. 象徵) / interact (v. 互動)', 
+                    grammar: 'ensure + that子句：確保某事會發生或不會發生。', 
+                    trans: '傑克將會搭計程車，以確保他的工作面試不會遲到。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '4. I _____ you that I won\'t tell anyone your secret. It\'s just between you and me.', 
+                options: ['(A) impress', '(B) promise', '(C) doubt', '(D) harm'], ans: 1,
+                exp: { 
+                    clue: '後方提到「不會告訴任何人你的秘密」(won\'t tell anyone your secret)，這是一個承諾。', 
+                    words: 'promise (v. 承諾；保證) / impress (v. 使印象深刻) / doubt (v. 懷疑) / harm (v. 傷害)', 
+                    grammar: 'promise sb. that + 子句：向某人保證/承諾某事。', 
+                    trans: '我向你保證我不會把你的秘密告訴任何人。這只是你我之間的秘密。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '5. The drink shop is _____ part-time workers. Why don\'t you give it a try?', 
+                options: ['(A) linking', '(B) handling', '(C) hiring', '(D) reminding'], ans: 2,
+                exp: { 
+                    clue: '飲料店正在尋找兼職人員，並鼓勵對方「試試看」(give it a try)，故為招募/雇用。', 
+                    words: 'hire (v. 雇用) / link (v. 連結) / handle (v. 處理) / remind (v. 提醒) / part-time (adj. 兼職的)', 
+                    grammar: 'is hiring 為現在進行式，表示「正在招募中」。', 
+                    trans: '這家飲料店正在招募兼職人員。你為什麼不試試看呢？' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '6. The app helps us _____ the buses so we know when they will arrive.', 
+                options: ['(A) train', '(B) track', '(C) harm', '(D) withdraw'], ans: 1,
+                exp: { 
+                    clue: '應用程式能幫助我們知道公車何時抵達，代表該 App 可以「追蹤」公車動態。', 
+                    words: 'track (v. 追蹤) / withdraw (v. 提款；撤退)', 
+                    grammar: 'help sb. (to) V：幫助某人做某事。這裡省去了 to。', 
+                    trans: '這個應用程式幫助我們追蹤公車，這樣我們就能知道它們何時會抵達。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '7. John\'s father was _____ by a scammer and lost lots of money.', 
+                options: ['(A) cheated', '(B) combined', '(C) movement', '(D) helped'], ans: 0,
+                exp: { 
+                    clue: '被詐騙集團(scammer)所害，且失去大量金錢，代表被「欺騙」。', 
+                    words: 'cheat (v. 欺騙) / scammer (n. 詐騙者) / combine (v. 結合)', 
+                    grammar: 'was cheated 為被動語態，表示「被欺騙」。', 
+                    trans: '約翰的父親被騙子騙了，損失了一大筆錢。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '8. [同義字] The center provides job seekers with <u>guidance</u>. It makes job searching easier.', 
+                options: ['(A) change', '(B) control', '(C) image', '(D) help'], ans: 3,
+                exp: { 
+                    clue: 'guidance 意為「指引；指導」，與選項中的 help (幫助) 意思最相近。', 
+                    words: 'guidance (n. 指引) / seek (v. 尋找) / job seeker (n. 求職者)', 
+                    grammar: 'provide sb. with sth. = provide sth. for sb. (提供某物給某人)', 
+                    trans: '這個中心為求職者提供幫助/指引。這讓找工作變得更容易。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '9. [同義字] Timothy is trying to <u>persuade</u> his parents to let him have a pet.', 
+                options: ['(A) cheat', '(B) believe', '(C) convince', '(D) create'], ans: 2,
+                exp: { 
+                    clue: 'persuade 意為「說服」，與 convince 意思相同。', 
+                    words: 'persuade (v. 說服) / convince (v. 說服；使相信) / cheat (v. 欺騙)', 
+                    grammar: 'persuade sb. to V = convince sb. to V (說服某人去做某事)', 
+                    trans: '提摩西正試圖說服他的父母讓他養一隻寵物。' 
+                } 
+            },
+            { 
+                section: 'vocab', type: 'mc', 
+                q: '10. [同義字] Sally received a special <u>award</u> during the event.', 
+                options: ['(A) provided', '(B) accepted', '(C) prize', '(D) noticed'], ans: 2,
+                exp: { 
+                    clue: 'award 意為「獎項；獎品」，與 prize (獎品) 意思最相近。', 
+                    words: 'award (n. 獎；v. 頒獎) / prize (n. 獎品) / receive (v. 收到)', 
+                    grammar: 'receive a special award (收到一個特別的獎項)', 
+                    trans: '莎莉在活動中獲得了一個特別的獎項。' 
+                } 
+            },
+
+            // Grammar
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '11. The students have decided _____ their project topic will be about robots.', 
+                options: ['(A) that', '(B) what', '(C) which', '(D) who'], ans: 0,
+                exp: { 
+                    clue: '空格後是一個完整的子句 (their project topic will be about robots)，作為 decided 的受詞。', 
+                    words: 'decide (v. 決定) / project topic (n. 專題主題) / robot (n. 機器人)', 
+                    grammar: 'that 引導名詞子句當作及物動詞 (decide) 的受詞，此時 that 不具意義，常可省略。', 
+                    trans: '學生們已經決定他們的專題主題將是關於機器人。' 
+                } 
+            },
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '12. There was a man _____ loudly on his phone on the train.', 
+                options: ['(A) to talk', '(B) talking', '(C) talked', '(D) talk'], ans: 1,
+                exp: { 
+                    clue: '句型 There be + N + Ving/V.p.p。男人是主動講電話，故用現在分詞 Ving 修飾前方名詞。', 
+                    words: 'loudly (adv. 大聲地) / on the phone (講電話)', 
+                    grammar: '分詞片語 talking loudly... 作為形容詞使用，修飾前方的 a man。相當於 who was talking。', 
+                    trans: '火車上有一個男人在大聲講電話。' 
+                } 
+            },
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '13. The sign says _____ taking pictures is not allowed in the museum.', 
+                options: ['(A) what', '(B) who', '(C) which', '(D) that'], ans: 3,
+                exp: { 
+                    clue: 'say 後面接一個完整的名詞子句做為受詞，須用 that 引導。', 
+                    words: 'sign (n. 標誌) / allow (v. 允許) / take pictures (拍照)', 
+                    grammar: 'that 引導名詞子句作 says 的受詞。動名詞 taking pictures 則是這個名詞子句裡的主詞。', 
+                    trans: '標誌上寫著博物館內不允許拍照。' 
+                } 
+            },
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '14. Edward is _____ tall _____ he can easily reach the top shelf.', 
+                options: ['(A) too...to', '(B) such...that', '(C) so...that', '(D) so...to'], ans: 2,
+                exp: { 
+                    clue: '表示「如此...以至於...」，空格中夾著形容詞 tall，故用 so + adj. + that 的句型。', 
+                    words: 'reach (v. 碰到；搆著) / shelf (n. 架子)', 
+                    grammar: 'so + 形容詞/副詞 + that + 子句；若用 such，則須接名詞 (such + a/an + adj + N + that)。', 
+                    trans: '愛德華很高，以至於他可以輕鬆地搆到最上面的架子。' 
+                } 
+            },
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '15. It is _____ for students to go on a field trip.', 
+                options: ['(A) too', '(B) exciting', '(C) excite', '(D) excitement'], ans: 1,
+                exp: { 
+                    clue: '修飾「去戶外教學 (to go on a field trip)」這件事，事物令人感到興奮，需用 V-ing 型態的形容詞。', 
+                    words: 'exciting (adj. 令人興奮的) / field trip (n. 戶外教學)', 
+                    grammar: 'It is + adj. + for sb. + to V。虛主詞 It 代替後方真正的主詞不定詞片語 (to go on a field trip)。', 
+                    trans: '對學生來說，去戶外教學是一件令人興奮的事。' 
+                } 
+            },
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '16. There are some beautiful paintings _____ in the hallway of the school. They were done by students.', 
+                options: ['(A) hung', '(B) to hang', '(C) hangs', '(D) hang'], ans: 0,
+                exp: { 
+                    clue: 'There are + N + V-ing/V.p.p 句型。畫作(paintings)是被掛在走廊上的，表示被動，故用過去分詞(V.p.p)。', 
+                    words: 'painting (n. 畫作) / hallway (n. 走廊) / hang (v. 懸掛；三態為 hang-hung-hung)', 
+                    grammar: 'hung 在此作為過去分詞，修飾 paintings，表示被動（被懸掛）。', 
+                    trans: '學校走廊上掛著一些美麗的畫作。這些是由學生完成的。' 
+                } 
+            },
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '17. It is _____ an interesting book that I have read it four times.', 
+                options: ['(A) so', '(B) such', '(C) too', '(D) much'], ans: 1,
+                exp: { 
+                    clue: '「如此...以至於...」句型中，若修飾名詞片語 (an interesting book)，需使用 such。', 
+                    words: 'interesting (adj. 有趣的) / read (v. 閱讀，過去分詞發音為 /rɛd/)', 
+                    grammar: 'such + (a/an) + adj. + N + that + 子句 = 如此...的一個...以至於...。', 
+                    trans: '這是一本如此有趣的書，以至於我已經讀了四遍。' 
+                } 
+            },
+            { 
+                section: 'grammar', type: 'mc', 
+                q: '18. It is necessary for employees _____ safety helmets in the factory.', 
+                options: ['(A) wear', '(B) wearing', '(C) be wear', '(D) to wear'], ans: 3,
+                exp: { 
+                    clue: '虛主詞 It 句型，後方必須搭配 to + 原形動詞作為真正的主詞。', 
+                    words: 'necessary (adj. 必須的) / employee (n. 員工) / safety helmet (n. 安全帽)', 
+                    grammar: 'It is + adj. + for sb. + to V。對某人而言做某事是...的。', 
+                    trans: '員工在工廠裡必須佩戴安全帽。' 
+                } 
+            },
+
+            // Cloze
+            { 
+                section: 'cloze', type: 'mc', contextId: 'cloze_1',
+                q: '19. Their traditional fishing boats are painted white, red, and black, and _____ eye-like patterns on both sides.', 
+                options: ['(A) it is', '(B) they are', '(C) there is', '(D) there are'], ans: 3,
+                exp: { 
+                    clue: '前句提到船隻被塗上顏色，接著並列 (and) 表達「有」像眼睛一樣的圖案。因為 patterns 是複數，故用 there are。', 
+                    words: 'traditional (adj. 傳統的) / eye-like (adj. 像眼睛的) / pattern (n. 圖案)', 
+                    grammar: 'There is/are... 表示「有/存在...」。複數名詞配 are。', 
+                    trans: '他們傳統的漁船被漆成白色、紅色和黑色，兩側都有像眼睛一樣的圖案。' 
+                } 
+            },
+            { 
+                section: 'cloze', type: 'mc', contextId: 'cloze_1',
+                q: '20. The eye pattern is one of the Tao\'s best-known _____.', 
+                options: ['(A) accounts', '(B) symbols', '(C) victims', '(D) tracks'], ans: 1,
+                exp: { 
+                    clue: '眼睛圖案是達悟族著名的「象徵」之一。', 
+                    words: 'best-known (adj. 最著名的) / symbol (n. 象徵) / victim (n. 受害者) / account (n. 帳戶；描述)', 
+                    grammar: 'one of the + 複數名詞 (其中之一...)', 
+                    trans: '眼睛圖案是達悟族最著名的象徵之一。' 
+                } 
+            },
+            { 
+                section: 'cloze', type: 'mc', contextId: 'cloze_1',
+                q: '21. They believe _____ these eyes can show the way...', 
+                options: ['(A) which', '(B) such', '(C) so', '(D) that'], ans: 3,
+                exp: { 
+                    clue: 'believe 後面接一個完整的名詞子句當受詞，需用 that 連結。', 
+                    words: 'believe (v. 相信) / show the way (指引方向)', 
+                    grammar: 'that 引導名詞子句作動詞 believe 的受詞，that 可省略。', 
+                    trans: '他們相信這些眼睛能指引方向、看見海中的危險...' 
+                } 
+            },
+            { 
+                section: 'cloze', type: 'mc', contextId: 'cloze_1',
+                q: '22. This special design has been _____ from one generation to another.', 
+                options: ['(A) watched out', '(B) inspired by', '(C) passed down', '(D) offered by'], ans: 2,
+                exp: { 
+                    clue: '設計從一個世代傳到另一個世代，表示「傳承；代代相傳」。', 
+                    words: 'generation (n. 世代) / pass down (phr. 傳承) / inspire (v. 啟發)', 
+                    grammar: 'has been passed down 為現在完成被動式，表示「已經被傳承下來」。', 
+                    trans: '這個特殊的設計已經代代相傳。' 
+                } 
+            },
+            { 
+                section: 'cloze', type: 'mc', contextId: 'cloze_1',
+                q: '23. Today, the boat-eye pattern is _____ an important cultural symbol that it is protected by law...', 
+                options: ['(A) so', '(B) too', '(C) such', '(D) very'], ans: 2,
+                exp: { 
+                    clue: '後方為 an important cultural symbol (名詞片語) 加上 that 子句，故必須搭配 such。', 
+                    words: 'cultural (adj. 文化的) / protect (v. 保護) / law (n. 法律)', 
+                    grammar: 'such + a/an + adj + N + that 句型（如此...的一個...以至於...）。', 
+                    trans: '今天，船眼圖案是如此重要的一個文化象徵，以至於受到法律保護...' 
+                } 
+            },
+
+            // Dialogue
+            { 
+                section: 'dialogue', type: 'mc', 
+                q: '24. Emily: There is something wrong with our report.<br>Tommy: _____<br>Emily: There is a mistake in the information we used.', 
+                options: ['(A) How lucky we are!', '(B) What\'s the problem?', '(C) I\'ll be right back.', '(D) What\'s going on?'], ans: 1, 
+                exp: { 
+                    clue: 'Emily 先說報告有問題，接著又具體說明「我們使用的資訊有錯誤」，可見 Tommy 是在問「出了什麼問題？」。', 
+                    words: 'mistake (n. 錯誤) / information (n. 資訊)', 
+                    grammar: 'What\'s the problem? 是常見的詢問「怎麼了？」、「出什麼事了？」的用語。', 
+                    trans: 'Emily: 我們的報告有點問題。<br>Tommy: 出了什麼問題？<br>Emily: 我們使用的資訊裡面有一個錯誤。' 
+                } 
+            },
+            { 
+                section: 'dialogue', type: 'mc', 
+                q: '25. Jenny: I don\'t feel like going outside.<br>Someone: _____<br>Jenny: I\'m fine. It\'s just too hot today.', 
+                options: ['(A) What are you going to do tonight?', '(B) I haven\'t seen you for ages.', '(C) What do you prefer?', '(D) Are you feeling okay?'], ans: 3,
+                exp: { 
+                    clue: 'Jenny 回答 "I\'m fine." (我很好)，表示對方剛才是在關心她的身體或狀態是否安好。', 
+                    words: 'feel like + V-ing (想要...) / fine (adj. 很好的)', 
+                    grammar: 'Are you feeling okay? 用於關切對方的身體或心理狀態。', 
+                    trans: 'Jenny: 我不想出門。<br>Someone: 你覺得還好嗎（身體不舒服嗎）？<br>Jenny: 我很好。只是今天太熱了。' 
+                } 
+            },
+            { 
+                section: 'dialogue', type: 'mc', 
+                q: '26. Judy: Are you going to a costume party?<br>George: No, I\'m going to a cosplaying event today. How do I look?<br>Billy: _____<br>Judy: You look great!<br>George: Thank you.', 
+                options: ['(A) I believe you will steal the show.', '(B) I\'m looking for something simple.', '(C) You need to get some new shoes.', '(D) You can do it better.'], ans: 0,
+                exp: { 
+                    clue: 'George 問 "How do I look?"(我看起來怎樣?)，Judy 回答很棒，此處合適的選項應也是正面的稱讚。steal the show 意指「搶盡風頭」。', 
+                    words: 'costume party (化妝舞會) / steal the show (搶盡風頭；大受歡迎)', 
+                    grammar: 'How do I look? 常用於詢問別人對自己外表或穿搭的意見。', 
+                    trans: 'Judy: 你要去化妝舞會嗎？<br>George: 不，我今天要參加角色扮演活動。我看起來怎樣？<br>Billy: 我相信你會搶盡全場風頭。<br>Judy: 你看起來棒極了！<br>George: 謝謝。' 
+                } 
+            },
+            { 
+                section: 'dialogue', type: 'mc', 
+                q: '27. Sara: Where do you usually buy clothes?<br>Sally: I usually shop online. It\'s more convenient.<br>Sara: I prefer going to real stores. _____<br>Sally: I get that. Some online stores may cheat people, so I always read the reviews first.', 
+                options: ['(A) Fashion changes every season.', '(B) I don\'t trust online stores.', '(C) It is common for people to feel nervous.', '(D) I can\'t find the fitting room.'], ans: 1,
+                exp: { 
+                    clue: 'Sara 說她偏好實體店面，接著 Sally 說「我懂，有些網路商店會騙人」，由此推論 Sara 中間說了不信任網路商店的話。', 
+                    words: 'convenient (adj. 方便的) / trust (v. 信任) / cheat (v. 欺騙) / review (n. 評論)', 
+                    grammar: 'prefer + Ving/N + to + Ving/N 表示「寧願/偏好...勝過...」。', 
+                    trans: 'Sara: 你通常在哪裡買衣服？<br>Sally: 我通常網購，比較方便。<br>Sara: 我比較喜歡去實體店面。我不信任網路商店。<br>Sally: 我了解。有些網路商店會騙人，所以我都會先看評論。' 
+                } 
+            },
+            { 
+                section: 'dialogue', type: 'mc', 
+                q: '28. Clerk: The dress comes in two colors, red and blue.<br>Helen: Which color suits me better?<br>Clerk: I think the red one looks great on you.<br>Helen: _____ I\'ll take the red one.', 
+                options: ['(A) I like the blue one better.', '(B) What do you recommend?', '(C) I agree with you.', '(D) I\'m doubtful about that.'], ans: 2,
+                exp: { 
+                    clue: '店員說紅色好看，Helen 最後說「我要買紅色的 (I\'ll take the red one)」，代表她同意店員的看法。', 
+                    words: 'suit (v. 適合) / agree with (同意某人) / doubtful (adj. 懷疑的)', 
+                    grammar: 'look great on + 人：(衣物)穿在某人身上很好看。', 
+                    trans: '店員: 這件洋裝有紅色跟藍色兩種。<br>Helen: 哪個顏色比較適合我？<br>店員: 我覺得紅色的穿在你身上很好看。<br>Helen: 我同意你。我要買紅色的。' 
+                } 
+            },
+
+            // Reading
+            { 
+                section: 'reading', type: 'mc', contextId: 'reading_1',
+                q: '29. What does the hundred pacer snake mean to the Paiwan people?', 
+                options: ['(A) Danger.', '(B) Mother.', '(C) Good luck.', '(D) Friendship.'], ans: 2,
+                exp: { 
+                    clue: '根據表格排灣族(Paiwan)的介紹："People believe the snake can protect their tribe and bring good luck."，百步蛇能保護部落並帶來「好運」。', 
+                    words: 'hundred pacer snake (n. 百步蛇) / protect (v. 保護) / good luck (好運)', 
+                    grammar: 'mean to sb. (對某人意味著/有...意義)。', 
+                    trans: '百步蛇對排灣族人來說意味著什麼？ (C) 好運。' 
+                } 
+            },
+            { 
+                section: 'reading', type: 'mc', contextId: 'reading_1',
+                q: '30. Which group\'s pattern is not related to protection?', 
+                options: ['(A) Atayal.', '(B) Amis.', '(C) Rukai.', '(D) Paiwan.'], ans: 2,
+                exp: { 
+                    clue: '排灣族(protect their tribe)、泰雅族(protecting them)、阿美族(protects and gives life)的說明中皆提到保護(protect)。只有魯凱族(Rukai)代表純潔、榮耀與勇敢。', 
+                    words: 'be related to (與...有關) / protection (n. 保護)', 
+                    grammar: 'not related to 表示「無關」。', 
+                    trans: '哪一個族群的圖案與保護無關？ (C) 魯凱族。' 
+                } 
+            },
+            { 
+                section: 'reading', type: 'mc', contextId: 'reading_1',
+                q: '31. Which of the following statements is true?', 
+                options: ['(A) Anyone in the Paiwan tribe can use the snake pattern.', '(B) Only women in the Rukai tribe can use the lily flower pattern.', '(C) The Atayal\'s diamond pattern shows their honor.', '(D) The Amis think a star is a symbol of a mother\'s love.'], ans: 3,
+                exp: { 
+                    clue: '選項(D)符合文章：阿美族的八角星展現了「母親的愛」(shows a mother\'s love)。(A)排灣族僅限頭目與貴族使用；(B)魯凱族男女皆可配戴；(C)泰雅族代表祖靈的眼睛，非榮耀。', 
+                    words: 'statement (n. 陳述) / symbol (n. 象徵)', 
+                    grammar: 'Which of the following + 複數名詞 + is... (下列哪一個是...)', 
+                    trans: '下列哪一項敘述是正確的？ (D) 阿美族認為星星是母親之愛的象徵。' 
+                } 
+            },
+            { 
+                section: 'reading', type: 'mc', contextId: 'reading_2',
+                q: '32. Why did Henry share his experience?', 
+                options: ['(A) To show how to make easy money online.', '(B) To explain how to spot a fake website.', '(C) To warn others to be careful of online scams.', '(D) To ask for people\'s advice about jobs.'], ans: 2,
+                exp: { 
+                    clue: '文章第一段提到 "To help you avoid making the same mistake as me" 以及最後一段 "taught me a painful lesson: always be careful about online offers"，主要目的是警告他人小心詐騙。', 
+                    words: 'warn (v. 警告) / scam (n. 詐騙) / avoid (v. 避免)', 
+                    grammar: 'To + V (不定詞) 置於句首或用作說明目的。', 
+                    trans: '為什麼亨利要分享他的經驗？ (C) 為了警告其他人小心網路詐騙。' 
+                } 
+            },
+            { 
+                section: 'reading', type: 'mc', contextId: 'reading_2',
+                q: '33. What does the word "fraud" mean in this article?', 
+                options: ['(A) Scam.', '(B) Contest.', '(C) Prize.', '(D) Money.'], ans: 0,
+                exp: { 
+                    clue: 'fraud 在此處指詐欺、騙局，與 scam 意思相同。前文提到帳戶被 scammers (詐騙者) 使用，也可作為推敲線索。', 
+                    words: 'fraud (n. 詐欺) / scam (n. 詐騙) / contest (n. 競賽)', 
+                    grammar: 'mean in this article 指「在此篇文章中的意思為」。', 
+                    trans: '"fraud" 這個字在這篇文章裡是什麼意思？ (A) 騙局/詐騙。' 
+                } 
+            },
+            { 
+                section: 'reading', type: 'mc', contextId: 'reading_2',
+                q: '34. Which of the following statements is true about Henry?', 
+                options: ['(A) He tried to cheat people out of money.', '(B) He lent a lot of money to scammers.', '(C) He didn\'t break the law.', '(D) He has learned his lesson.'], ans: 3,
+                exp: { 
+                    clue: '文章最後一段提到 "This experience taught me a painful lesson"，表示他學到了教訓。(A)錯，他沒騙人；(B)錯，他是出租帳號而非借錢；(C)錯，法律上他仍需負責。', 
+                    words: 'learn one\'s lesson (學到教訓) / break the law (犯法)', 
+                    grammar: 'be held responsible (被要求負起責任)。', 
+                    trans: '關於亨利，下列哪一項敘述是正確的？ (D) 他已經學到了教訓。' 
+                } 
+            },
+
+            // Writing / Fill-in-the-blanks
+            { 
+                section: 'writing', type: 'input',
+                q: '35. 如果你收到奇怪的簡訊,馬上刪除。<br>If you receive a strange message, delete it (r)_____ (a)_____.', 
+                ans: ['right', 'away'],
+                exp: { 
+                    clue: '「馬上、立刻」常見的英文片語有 immediately、at once 以及 right away。提示字首為 r 和 a。', 
+                    words: 'receive (v. 收到) / delete (v. 刪除) / right away (phr. 立刻)', 
+                    grammar: '祈使句型：Delete it (動詞原形開頭)。', 
+                    trans: '如果你收到奇怪的簡訊，馬上刪除它。' 
+                } 
+            },
+            { 
+                section: 'writing', type: 'input',
+                q: '36. 你最好對這工作要當心,因為它聽起來好得不像真的。<br>You had better be careful about this job because it sounds too (g)_____ to be (t)_____.', 
+                ans: ['good', 'true'],
+                exp: { 
+                    clue: '「太...而不能/不像...」是 too... to... 句型。「好得不像真的」英文慣用語為 too good to be true。', 
+                    words: 'careful (adj. 小心的) / sound (v. 聽起來)', 
+                    grammar: 'too + adj. + to V (太...而不能...)', 
+                    trans: '你最好對這份工作小心點，因為它聽起來好得令人難以置信。' 
+                } 
+            },
+            { 
+                section: 'writing', type: 'input',
+                q: '37. 句子重組：she will / that / I believe / her promise / keep', 
+                ans: ['I believe that she will keep her promise.'],
+                exp: { 
+                    clue: '主句為主詞+動詞 (I believe)，加上 that 引導的名詞子句作為受詞，子句內同樣需主詞 (she) + 助動詞/動詞 (will keep) + 受詞 (her promise)。', 
+                    words: 'keep a promise (遵守承諾)', 
+                    grammar: 'that 名詞子句當 believe 的受詞。', 
+                    trans: '我相信她會遵守她的承諾。' 
+                } 
+            },
+            { 
+                section: 'writing', type: 'input',
+                q: '38. 句子重組：many people / jogging / There are / every evening / in the park', 
+                ans: ['There are many people jogging in the park every evening.', 'There are many people jogging every evening in the park.'],
+                exp: { 
+                    clue: 'There are 開頭表示「有...」，加上主詞 many people。接著用 V-ing (jogging) 當作分詞修飾 people。最後放地方副詞(in the park) 與時間副詞(every evening)。', 
+                    words: 'jog (v. 慢跑)', 
+                    grammar: 'There are + N + Ving。時間副詞與地方副詞通常放句尾，地方通常在時間之前。', 
+                    trans: '每天傍晚公園裡有很多人在慢跑。' 
+                } 
+            },
+            { 
+                section: 'writing', type: 'input',
+                q: '39. 改寫句子 (用 It is adj....改寫)：Finishing the job alone is impossible for me.', 
+                ans: ['It is impossible for me to finish the job alone.'],
+                exp: { 
+                    clue: '原句將 V-ing 當作主詞。改寫時可使用虛主詞 It 放句首，將真正的主詞改成不定詞片語 (to finish...) 移至句尾。', 
+                    words: 'impossible (adj. 不可能的) / alone (adv. 獨自地)', 
+                    grammar: 'It is + adj. + for sb. + to V。', 
+                    trans: '對我來說，獨自完成這份工作是不可能的。' 
+                } 
+            }
+        ];
+
+        // Core Functions
+        function renderApp() {
+            const container = document.getElementById('app-content');
+            const sections = ['vocab', 'grammar', 'cloze', 'dialogue', 'reading', 'writing'];
+            
+            sections.forEach(secId => {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = `section ${secId === 'vocab' ? 'active' : ''}`;
+                sectionDiv.id = `sec-${secId}`;
+                
+                // Add contexts if needed
+                let currentContext = null;
+
+                const secQuestions = quizData.filter(q => q.section === secId);
+                
+                secQuestions.forEach((q, idx) => {
+                    // Check if we need to render a context block
+                    if (q.contextId && currentContext !== q.contextId) {
+                        currentContext = q.contextId;
+                        const ctx = contexts[currentContext];
+                        const ctxBlock = document.createElement('div');
+                        ctxBlock.className = 'context-block';
+                        ctxBlock.innerHTML = `
+                            <div class="context-title">
+                                ${ctx.title}
+                                <div>
+                                    <button class="btn-action tts-read-ctx" data-ctx="${currentContext}">🔊 朗讀文章</button>
+                                    <button class="btn-action toggle-trans" data-ctx="${currentContext}">👁️ 顯示/隱藏翻譯</button>
+                                </div>
+                            </div>
+                            <div class="context-en" id="en-${currentContext}">${ctx.en}</div>
+                            <div class="translation-block" id="zh-${currentContext}">${ctx.zh}</div>
+                        `;
+                        sectionDiv.appendChild(ctxBlock);
+                    }
+
+                    // For unique IDs across the entire page, use q.q as a hash or just an incrementing index.
+                    // To be safe, we'll find the global index of q in quizData.
+                    const globalIdx = quizData.indexOf(q);
+
+                    const card = document.createElement('div');
+                    card.className = 'question-card';
+                    card.innerHTML = `
+                        <div class="question-header">
+                            <div class="question-text" id="qtext-${globalIdx}">${q.q}</div>
+                            <button class="tts-btn" title="朗讀題目" onclick="playTTS(${globalIdx})">🔊</button>
+                        </div>
+                        ${renderOptions(q, globalIdx)}
+                        ${renderExplanation(q.exp, globalIdx)}
+                    `;
+                    sectionDiv.appendChild(card);
+                });
+
+                container.appendChild(sectionDiv);
+            });
+
+            setupEventListeners();
+        }
+
+        function renderOptions(q, qIdx) {
+            if (q.type === 'mc') {
+                return `
+                    <div class="options-grid">
+                        ${q.options.map((opt, optIdx) => `
+                            <button class="option-btn" onclick="checkMCQ(this, ${qIdx}, ${optIdx})">${opt}</button>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (q.type === 'input') {
+                const inputsHtml = q.ans.map((_, i) => `<input type="text" class="answer-input" id="input-${qIdx}-${i}" placeholder="輸入答案...">`).join('');
+                return `
+                    <div class="input-group">
+                        ${inputsHtml}
+                        <button class="btn-action" onclick="checkInput(${qIdx})">送出對答</button>
+                    </div>
+                    <div id="input-feedback-${qIdx}" style="margin-bottom:1rem; font-weight:bold;"></div>
+                `;
+            }
+            return '';
+        }
+
+        function renderExplanation(exp, qIdx) {
+            return `
+                <div class="explanation" id="exp-${qIdx}">
+                    <div class="exp-item"><span class="exp-title">💡 解題線索:</span> ${exp.clue}</div>
+                    <div class="exp-item"><span class="exp-title">📚 重要字詞:</span> ${exp.words}</div>
+                    <div class="exp-item"><span class="exp-title">⚖️ 文法句型:</span> ${exp.grammar}</div>
+                    <div class="exp-item"><span class="exp-title">📝 中文翻譯:</span> ${exp.trans}</div>
+                </div>
+            `;
+        }
+
+        // Logic & Interaction
+        function setupEventListeners() {
+            // Tabs
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    // Update active class
+                    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    // Show target section
+                    const targetId = e.target.getAttribute('data-target');
+                    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+                    document.getElementById(`sec-${targetId}`).classList.add('active');
+
+                    // Smooth scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            // Context Buttons
+            document.querySelectorAll('.toggle-trans').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const ctxId = e.target.getAttribute('data-ctx');
+                    const zhBlock = document.getElementById(`zh-${ctxId}`);
+                    zhBlock.style.display = zhBlock.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            document.querySelectorAll('.tts-read-ctx').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const ctxId = e.target.getAttribute('data-ctx');
+                    const ctxObj = contexts[ctxId];
+                    let textToRead = ctxObj.en;
+                    
+                    // Fill cloze blanks if any
+                    if(ctxId === 'cloze_1') {
+                        // Dynamically fill cloze answers based on quizData mapping
+                        const clozeAnswers = {
+                            "19": "there are",
+                            "20": "symbols",
+                            "21": "that",
+                            "22": "passed down",
+                            "23": "such"
+                        };
+                        textToRead = textToRead.replace(/<span[^>]*>(\d+)<\/span>/g, (match, p1) => {
+                            return clozeAnswers[p1] || match;
+                        });
+                    }
+
+                    // Strip HTML
+                    const tmp = document.createElement("DIV");
+                    tmp.innerHTML = textToRead;
+                    textToRead = tmp.textContent || tmp.innerText || "";
+
+                    speak(textToRead);
+                });
+            });
+        }
+
+        function checkMCQ(btnElement, qIdx, selectedOptIdx) {
+            const q = quizData[qIdx];
+            const parent = btnElement.parentElement;
+            const buttons = parent.querySelectorAll('.option-btn');
+            
+            // Disable all buttons in this question
+            buttons.forEach(b => b.classList.add('disabled'));
+            
+            if (selectedOptIdx === q.ans) {
+                btnElement.classList.add('correct');
+            } else {
+                btnElement.classList.add('wrong');
+                buttons[q.ans].classList.add('correct');
+            }
+            
+            // Show Explanation
+            document.getElementById(`exp-${qIdx}`).style.display = 'block';
+
+            // Special logic: update context span if it's a cloze question
+            if (q.contextId) {
+                const match = q.q.match(/^(\d+)\./);
+                if (match) {
+                    const clozeNum = match[1];
+                    const spanEle = document.getElementById(`cloze-${clozeNum}`);
+                    if (spanEle) {
+                        const correctText = q.options[q.ans].replace(/^\([A-D]\)\s*/, '');
+                        spanEle.innerText = correctText;
+                    }
+                }
+            }
+        }
+
+        function checkInput(qIdx) {
+            const q = quizData[qIdx];
+            let isCorrect = true;
+            let isAllEmpty = true;
+
+            const isSentence = q.ans.some(a => a.includes(' '));
+
+            for (let i = 0; i < q.ans.length; i++) {
+                const inputEle = document.getElementById(`input-${qIdx}-${i}`);
+                const val = inputEle.value.trim();
+                
+                if (val !== '') {
+                    isAllEmpty = false;
+                }
+
+                if (val === '') {
+                    isCorrect = false;
+                } else if (isSentence) {
+                    // It's a sentence
+                    const matched = q.ans.some(a => a.toLowerCase().replace(/[^a-z0-9]/g, '') === val.toLowerCase().replace(/[^a-z0-9]/g, ''));
+                    if(!matched) isCorrect = false;
+                } else {
+                    // Single word
+                    if (val.toLowerCase() !== q.ans[i].toLowerCase()) {
+                        isCorrect = false;
+                    }
+                }
+            }
+
+            const feedbackEle = document.getElementById(`input-feedback-${qIdx}`);
+            
+            if (isAllEmpty) {
+                feedbackEle.innerHTML = `<span style="color: var(--danger);">❌ 答案不可留白，請輸入答案。</span>`;
+                isCorrect = false;
+            } else if (isCorrect) {
+                feedbackEle.innerHTML = `<span style="color: var(--success);">✅ 答對了！</span>`;
+            } else {
+                feedbackEle.innerHTML = `<span style="color: var(--danger);">❌ 答錯了。正確答案為: ${q.ans.join(' / ')}</span>`;
+            }
+
+            document.getElementById(`exp-${qIdx}`).style.display = 'block';
+        }
+
+        // TTS Engine
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel(); // Stop current playing
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9; // Slightly slower for learning
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('您的瀏覽器不支援語音朗讀功能。');
+            }
+        }
+
+        function playTTS(qIdx) {
+            const q = quizData[qIdx];
+            let textToRead = q.q;
+
+            // Strip prefix "1. ", "[同義字]" etc.
+            textToRead = textToRead.replace(/^(\d+\.|\[.*?\])\s*/g, '');
+            
+            // Remove HTML tags
+            const tmp = document.createElement("DIV");
+            tmp.innerHTML = textToRead;
+            textToRead = tmp.textContent || tmp.innerText || "";
+
+            // Replace blanks / underscores with correct answer
+            if (q.type === 'mc' && textToRead.includes('_')) {
+                const correctText = q.options[q.ans].replace(/^\([A-D]\)\s*/, '');
+                textToRead = textToRead.replace(/_+/g, correctText);
+            }
+
+            // For dialogue
+            if (q.section === 'dialogue') {
+                const correctText = q.options[q.ans].replace(/^\([A-D]\)\s*/, '');
+                textToRead = textToRead.replace(/_+/g, correctText);
+            }
+
+            // For writing, just read the correct answer string directly
+            if (q.section === 'writing') {
+                textToRead = q.ans[0]; // read the first acceptable answer
+            }
+
+            speak(textToRead);
+        }
+
+        // Initialize
+        window.onload = renderApp;
+    </script>
+</body>
+</html>
